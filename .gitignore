@@ -1,0 +1,23 @@
+node_modules/
+dist/
+.next/
+out/
+coverage/
+*.tsbuildinfo
+
+# Secrets - never commit
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Research snapshots may contain large HTML; keep the reports, ignore raw dumps
+docs/research/**/*.html
+docs/research/**/raw/
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json

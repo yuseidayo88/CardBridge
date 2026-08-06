@@ -11,13 +11,13 @@ PSA10 ポケモンカード 国内仕入 → eBay 出品 半自動管理シス�
 本セッションの実行環境は組織のエグレスポリシー配下にあり、以下のホストへの
 アウトバウンド接続が **ゲートウェイ側で 403** となり到達できませんでした。
 
-| ホスト | 結果 | 備考 |
-|---|---|---|
-| `www.magicardshop.jp` | 403 (CONNECT rejected) | サイト側ではなくプロキシ側の拒否 |
-| `www.cardrush-pokemon.jp` | 403 (CONNECT rejected) | 同上 |
-| `www.ebay.com` (ポリシーページ) | 403 | WebFetch 全面不可 |
-| `developer.ebay.com` (API ドキュメント) | 403 | WebFetch 全面不可 |
-| `en.wikipedia.org` (疎通テスト) | 403 | WebFetch 自体が環境で無効 |
+| ホスト                                  | 結果                   | 備考                             |
+| --------------------------------------- | ---------------------- | -------------------------------- |
+| `www.magicardshop.jp`                   | 403 (CONNECT rejected) | サイト側ではなくプロキシ側の拒否 |
+| `www.cardrush-pokemon.jp`               | 403 (CONNECT rejected) | 同上                             |
+| `www.ebay.com` (ポリシーページ)         | 403                    | WebFetch 全面不可                |
+| `developer.ebay.com` (API ドキュメント) | 403                    | WebFetch 全面不可                |
+| `en.wikipedia.org` (疎通テスト)         | 403                    | WebFetch 自体が環境で無効        |
 
 利用できたのは Web 検索のみです。したがって本書のうち
 
@@ -54,13 +54,13 @@ PSA10 ポケモンカード 国内仕入 → eBay 出品 半自動管理シス�
 
 ### 1.2 スコープの確認
 
-| 対象 | 内容 |
-|---|---|
-| 対象商品 | ポケモンカード **PSA10 シングルのみ** |
-| 対象外 | PSA9 以下、未鑑定、BOX、パック、サプライ、他 TCG |
-| 提携先 | magi通販 / カードラッシュ（画像利用・自動取得・eBay 販売の許諾あり） |
-| MVP の到達点 | 半自動。承認済み商品のみ eBay Sandbox → 少数 Production 出品 |
-| MVP 非対象 | 提携先への自動発注、完全自動出品、在庫の自動再仕入 |
+| 対象         | 内容                                                                 |
+| ------------ | -------------------------------------------------------------------- |
+| 対象商品     | ポケモンカード **PSA10 シングルのみ**                                |
+| 対象外       | PSA9 以下、未鑑定、BOX、パック、サプライ、他 TCG                     |
+| 提携先       | magi通販 / カードラッシュ（画像利用・自動取得・eBay 販売の許諾あり） |
+| MVP の到達点 | 半自動。承認済み商品のみ eBay Sandbox → 少数 Production 出品         |
+| MVP 非対象   | 提携先への自動発注、完全自動出品、在庫の自動再仕入                   |
 
 ### 1.3 用語の定義（以降で厳密に使い分ける）
 
@@ -133,18 +133,18 @@ no-JS の HTML に商品名・価格・在庫が含まれる
 
 ### 2.5 サイトへの配慮（提携許可があっても厳守）
 
-| 項目 | 設定値（初期） |
-|---|---|
-| 同時実行数 | **1**（店舗ごと） |
-| リクエスト間隔 | **3秒**（jitter ±1秒） |
-| 1回の同期の最大ページ数 | 設定可（初期 20） |
-| 詳細ページ取得 | **差分のみ**（一覧のハッシュが変化した商品だけ） |
-| 条件付きリクエスト | `If-None-Match` / `If-Modified-Since` を送信、304 は即スキップ |
-| 画像 | `original_image_hash` で重複排除。同一画像は再取得しない |
-| リトライ | 最大3回、指数バックオフ（2s/4s/8s）、5xx と 429 のみ |
-| 実行時間帯 | 深夜帯（JST 2:00-6:00）を既定のフルスキャン枠に |
-| robots.txt | 起動時に取得・尊重（提携許可があっても既定は尊重、上書きは設定で明示） |
-| User-Agent | 連絡先 URL 入りの固定 UA。偽装しない |
+| 項目                    | 設定値（初期）                                                         |
+| ----------------------- | ---------------------------------------------------------------------- |
+| 同時実行数              | **1**（店舗ごと）                                                      |
+| リクエスト間隔          | **3秒**（jitter ±1秒）                                                 |
+| 1回の同期の最大ページ数 | 設定可（初期 20）                                                      |
+| 詳細ページ取得          | **差分のみ**（一覧のハッシュが変化した商品だけ）                       |
+| 条件付きリクエスト      | `If-None-Match` / `If-Modified-Since` を送信、304 は即スキップ         |
+| 画像                    | `original_image_hash` で重複排除。同一画像は再取得しない               |
+| リトライ                | 最大3回、指数バックオフ（2s/4s/8s）、5xx と 429 のみ                   |
+| 実行時間帯              | 深夜帯（JST 2:00-6:00）を既定のフルスキャン枠に                        |
+| robots.txt              | 起動時に取得・尊重（提携許可があっても既定は尊重、上書きは設定で明示） |
+| User-Agent              | 連絡先 URL 入りの固定 UA。偽装しない                                   |
 
 ---
 
@@ -236,14 +236,14 @@ no-JS の HTML に商品名・価格・在庫が含まれる
 
 ### 3.2 確認しきれなかった項目（Phase 7 の Sandbox 実測で確定）
 
-| 項目 | 確定方法 |
-|---|---|
+| 項目                            | 確定方法                                |
+| ------------------------------- | --------------------------------------- |
 | 日本語ポケカの正確なカテゴリ ID | `getCategorySuggestions` + Sandbox 実測 |
-| PSA の grader value ID | `getItemConditionPolicies` |
-| grade 10 の value ID | 同上 |
-| 必須 Item Specifics 一覧 | `getItemAspectsForCategory` |
-| Inventory API の実レート制限 | `getUserRateLimits` |
-| Picture Policy の逐条文言 | **§4 参照。要ユーザー確認** |
+| PSA の grader value ID          | `getItemConditionPolicies`              |
+| grade 10 の value ID            | 同上                                    |
+| 必須 Item Specifics 一覧        | `getItemAspectsForCategory`             |
+| Inventory API の実レート制限    | `getUserRateLimits`                     |
+| Picture Policy の逐条文言       | **§4 参照。要ユーザー確認**             |
 
 ---
 
@@ -255,16 +255,16 @@ no-JS の HTML に商品名・価格・在庫が含まれる
 本環境から到達できませんでした（403）。以下は検索経由で得られた内容であり、
 **逐条の一次確認が未了**であることを明示します。
 
-| 論点 | 得られた情報 | 黒塗りへの含意 |
-|---|---|---|
-| 枠線・ボーダー | **追加ボーダーは全面禁止** | 黒塗りは「ボーダー」ではない → 直接は非該当 |
-| 透かし | 所有者表示目的は可だが、**画像の主要部への重畳は不可**。面積5%以下・不透明度50%以下が目安 | 黒矩形は「透かし」の定義には当たらないが、**主要部への重畳禁止**の趣旨は近い |
-| テキスト | **セラー宣伝目的のテキストは不可**。ユーザーID/著作権表記は50%不透明度で可 | 黒塗りに文字を入れない限り非該当 |
-| 商品を隠す要素 | **商品を隠すプレースホルダ、商品を覆うプロモーション用オーバーレイ、商品を遮る透かしは禁止** | **ここが最大の論点**。黒矩形は「商品の一部（ラベル）を覆うオーバーレイ」と解釈されうる |
-| 正確性 | 画像は**実物を正確に表現**しなければならない | ラベル情報の隠蔽は「正確な表現」の観点で議論の余地 |
-| 中古/コレクタブル | **ストックフォトは新品のみ許可**。中古は実物撮影が必要 | PSA スラブは一点物 → **代表画像は原則不可の側** |
-| グレード品の写真 | **鑑定会社名/ロゴが明確に写った写真**が必要 | ラベル全体のトリミング (CROP) は**この要件と衝突** |
-| 自動検知 | 透かし自動検知は数年前から稼働、**近年はかなり積極的**。画像の**拒否・差し替え・非表示**がありうる | 黒塗りが誤検知される運用リスクが実在 |
+| 論点              | 得られた情報                                                                                       | 黒塗りへの含意                                                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| 枠線・ボーダー    | **追加ボーダーは全面禁止**                                                                         | 黒塗りは「ボーダー」ではない → 直接は非該当                                            |
+| 透かし            | 所有者表示目的は可だが、**画像の主要部への重畳は不可**。面積5%以下・不透明度50%以下が目安          | 黒矩形は「透かし」の定義には当たらないが、**主要部への重畳禁止**の趣旨は近い           |
+| テキスト          | **セラー宣伝目的のテキストは不可**。ユーザーID/著作権表記は50%不透明度で可                         | 黒塗りに文字を入れない限り非該当                                                       |
+| 商品を隠す要素    | **商品を隠すプレースホルダ、商品を覆うプロモーション用オーバーレイ、商品を遮る透かしは禁止**       | **ここが最大の論点**。黒矩形は「商品の一部（ラベル）を覆うオーバーレイ」と解釈されうる |
+| 正確性            | 画像は**実物を正確に表現**しなければならない                                                       | ラベル情報の隠蔽は「正確な表現」の観点で議論の余地                                     |
+| 中古/コレクタブル | **ストックフォトは新品のみ許可**。中古は実物撮影が必要                                             | PSA スラブは一点物 → **代表画像は原則不可の側**                                        |
+| グレード品の写真  | **鑑定会社名/ロゴが明確に写った写真**が必要                                                        | ラベル全体のトリミング (CROP) は**この要件と衝突**                                     |
+| 自動検知          | 透かし自動検知は数年前から稼働、**近年はかなり積極的**。画像の**拒否・差し替え・非表示**がありうる | 黒塗りが誤検知される運用リスクが実在                                                   |
 
 ### 4.2 評価（判断根拠）
 
@@ -293,15 +293,15 @@ no-JS の HTML に商品名・価格・在庫が含まれる
 
 要件「ポリシー上問題がある可能性が高い方法を本番デフォルトにしない」に従い:
 
-| 設定 | 既定値 | 理由 |
-|---|---|---|
-| `IMAGE_PROCESSING_METHOD` (production) | **`ORIGINAL`** | 加工しない = ポリシー抵触リスク最小。グレーダーロゴも保持される |
-| `REPRESENTATIVE_IMAGE_MODE` | **`DISABLED`** | 実物1個体 : 出品1件を厳守。eBay 数量は 1 |
-| `BLACK_MASK` | 実装するが**手動承認必須**の opt-in | 管理者が明示的に選択し、1件ずつ承認した場合のみ |
-| `CROP` | 使用可だが**ラベル全体の除去は禁止**（バリデーションで弾く） | 鑑定会社ロゴの可視性要件を守るため |
-| `BLUR` | opt-in（黒塗りより穏当だが同じグレー領域） | — |
-| `SOURCE_REDACTED` | 提携先が非表示済み画像を提供する場合に使用 | **最も安全。交渉価値が最も高い** |
-| 管理画面表示 | 常にマスク版を表示可（社内利用はポリシー対象外） | 要件7を満たす |
+| 設定                                   | 既定値                                                       | 理由                                                            |
+| -------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------- |
+| `IMAGE_PROCESSING_METHOD` (production) | **`ORIGINAL`**                                               | 加工しない = ポリシー抵触リスク最小。グレーダーロゴも保持される |
+| `REPRESENTATIVE_IMAGE_MODE`            | **`DISABLED`**                                               | 実物1個体 : 出品1件を厳守。eBay 数量は 1                        |
+| `BLACK_MASK`                           | 実装するが**手動承認必須**の opt-in                          | 管理者が明示的に選択し、1件ずつ承認した場合のみ                 |
+| `CROP`                                 | 使用可だが**ラベル全体の除去は禁止**（バリデーションで弾く） | 鑑定会社ロゴの可視性要件を守るため                              |
+| `BLUR`                                 | opt-in（黒塗りより穏当だが同じグレー領域）                   | —                                                               |
+| `SOURCE_REDACTED`                      | 提携先が非表示済み画像を提供する場合に使用                   | **最も安全。交渉価値が最も高い**                                |
+| 管理画面表示                           | 常にマスク版を表示可（社内利用はポリシー対象外）             | 要件7を満たす                                                   |
 
 **最推奨アクション**: 提携2社に対して
 「**認証番号部分を非表示にした eBay 出品用画像の提供**」または
@@ -310,6 +310,7 @@ no-JS の HTML に商品名・価格・在庫が含まれる
 
 **最終確認のお願い**: 公式 Picture Policy の逐条文言は、
 恐れ入りますが以下のいずれかでご確認をお願いします。
+
 1. 上記ドメインをエグレス許可リストへ追加していただく
 2. ポリシーページのテキストを共有していただく
 3. eBay Japan のセラーサポート／カテゴリ担当へ照会（**最も確実**。
@@ -324,15 +325,15 @@ Production 出品経路では選択できないようコードで封じます。
 
 ### 5.1 方式比較
 
-| # | 方式 | ポリシー risk | バイヤー信頼 | 実装コスト | 判定 |
-|---|---|---|---|---|---|
-| 1 | ORIGINAL（無加工） | **低** | 高 | 極小 | **本番既定** |
-| 2 | BLACK_MASK | 中〜高 | 中〜低 | 大 | opt-in / 手動承認必須 |
-| 3 | CROP | 中（ロゴ欠落なら高） | 中 | 中 | 条件付き可 |
-| 4 | BLUR | 中 | 中 | 中 | opt-in |
-| 5 | SOURCE_REDACTED | **最低** | 高 | 小（交渉が必要） | **最推奨・要交渉** |
-| 6 | eBay 用代表画像を別途用意 | 高（一点物） | 低 | 中 | 不採用（既定 OFF） |
-| 7 | 管理画面=マスク / eBay=別画像 | 高 | 低 | 中 | 不採用（既定 OFF） |
+| #   | 方式                          | ポリシー risk        | バイヤー信頼 | 実装コスト       | 判定                  |
+| --- | ----------------------------- | -------------------- | ------------ | ---------------- | --------------------- |
+| 1   | ORIGINAL（無加工）            | **低**               | 高           | 極小             | **本番既定**          |
+| 2   | BLACK_MASK                    | 中〜高               | 中〜低       | 大               | opt-in / 手動承認必須 |
+| 3   | CROP                          | 中（ロゴ欠落なら高） | 中           | 中               | 条件付き可            |
+| 4   | BLUR                          | 中                   | 中           | 中               | opt-in                |
+| 5   | SOURCE_REDACTED               | **最低**             | 高           | 小（交渉が必要） | **最推奨・要交渉**    |
+| 6   | eBay 用代表画像を別途用意     | 高（一点物）         | 低           | 中               | 不採用（既定 OFF）    |
+| 7   | 管理画面=マスク / eBay=別画像 | 高                   | 低           | 中               | 不採用（既定 OFF）    |
 
 ### 5.2 黒塗りを実装する場合の設計（opt-in 経路）
 
@@ -418,16 +419,16 @@ export interface SupplierAdapter {
 
   fetchProductList(o?: FetchOptions): AsyncIterable<SupplierProductRaw>;
   fetchProductDetail(sourceProductId: string): Promise<SupplierProductDetailRaw>;
-  checkStock(ids: string[]): Promise<SupplierStockResult[]>;   // バッチ化
-  checkPrice(ids: string[]): Promise<SupplierPriceResult[]>;   // バッチ化
+  checkStock(ids: string[]): Promise<SupplierStockResult[]>; // バッチ化
+  checkPrice(ids: string[]): Promise<SupplierPriceResult[]>; // バッチ化
   normalizeUrl(url: string): string;
   extractSourceProductId(url: string, html?: string): string | null;
-  healthCheck(): Promise<AdapterHealth>;  // セレクタ生存確認
+  healthCheck(): Promise<AdapterHealth>; // セレクタ生存確認
 }
 
 export interface SupplierCapabilities {
-  hasExactStockCount: boolean;   // false なら eBay 数量を 1 に固定
-  hasStructuredData: boolean;    // JSON-LD 等
+  hasExactStockCount: boolean; // false なら eBay 数量を 1 に固定
+  hasStructuredData: boolean; // JSON-LD 等
   supportsConditionalGet: boolean;
   requiresJsRendering: boolean;
   maxConcurrency: number;
@@ -461,13 +462,13 @@ export interface SupplierCapabilities {
     "price": ".item-price",
     "stock": ".item-stock",
     "link": "a.item-link",
-    "image": "img.item-thumb"
+    "image": "img.item-thumb",
   },
   "stockRules": [
     { "match": "SOLD OUT", "status": "OUT_OF_STOCK" },
     { "match": "残り(\\d+)点", "status": "IN_STOCK", "captureQty": 1 },
-    { "match": "在庫あり", "status": "IN_STOCK", "qty": null }
-  ]
+    { "match": "在庫あり", "status": "IN_STOCK", "qty": null },
+  ],
 }
 ```
 
@@ -497,57 +498,57 @@ HTML 構造が変わったら **この JSON だけを直す**（アプリの再�
 
 **仕入れ先**
 
-| テーブル | 主な列 |
-|---|---|
-| `suppliers` | code, name, is_enabled, base_url, trust_score, notes_permission (利用許諾メモ) |
-| `supplier_settings` | supplier_id, selectors jsonb, stock_rules jsonb, fetch_interval_min, safety_stock, domestic_shipping_fee, handling_fee, lead_time_days, max_concurrency, min_interval_ms, priority |
-| `supplier_products` | supplier_id, source_product_id (UQ w/ supplier), canonical_url, raw_title, price_incl_tax, stock_qty (nullable), stock_status, first_seen_at, last_checked_at, raw_payload jsonb, parse_warnings jsonb, parse_confidence, content_hash, etag, last_modified |
-| `supplier_product_attributes` | supplier_product_id, field, value, source, confidence （※ card_name/number/set/rarity/year/language/grader/grade を三つ組で保持） |
+| テーブル                      | 主な列                                                                                                                                                                                                                                                      |
+| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `suppliers`                   | code, name, is_enabled, base_url, trust_score, notes_permission (利用許諾メモ)                                                                                                                                                                              |
+| `supplier_settings`           | supplier_id, selectors jsonb, stock_rules jsonb, fetch_interval_min, safety_stock, domestic_shipping_fee, handling_fee, lead_time_days, max_concurrency, min_interval_ms, priority                                                                          |
+| `supplier_products`           | supplier_id, source_product_id (UQ w/ supplier), canonical_url, raw_title, price_incl_tax, stock_qty (nullable), stock_status, first_seen_at, last_checked_at, raw_payload jsonb, parse_warnings jsonb, parse_confidence, content_hash, etag, last_modified |
+| `supplier_product_attributes` | supplier_product_id, field, value, source, confidence （※ card_name/number/set/rarity/year/language/grader/grade を三つ組で保持）                                                                                                                           |
 
 **カタログ**
 
-| テーブル | 主な列 |
-|---|---|
+| テーブル           | 主な列                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `catalog_products` | card_name_ja, card_name_en, card_number, set_code, set_name, rarity, release_year, language, grading_company, grade, match_key, is_verified |
-| `product_matches` | catalog_product_id, supplier_product_id, match_score, match_method (AUTO/MANUAL), matched_by, matched_at, unmatched_at |
+| `product_matches`  | catalog_product_id, supplier_product_id, match_score, match_method (AUTO/MANUAL), matched_by, matched_at, unmatched_at                      |
 
 **画像**
 
-| テーブル | 主な列 |
-|---|---|
-| `product_images` | §5.2 のとおり |
+| テーブル                | 主な列                                                            |
+| ----------------------- | ----------------------------------------------------------------- |
+| `product_images`        | §5.2 のとおり                                                     |
 | `image_processing_jobs` | image_id, method, status, attempts, error, detector_results jsonb |
 
 **マーケットプレイス**
 
-| テーブル | 主な列 |
-|---|---|
-| `marketplaces` | code (EBAY_US 等), currency, is_enabled |
-| `marketplace_listings` | catalog_product_id, marketplace_id, sku, ebay_offer_id, ebay_listing_id, status, price, quantity, published_at, last_synced_at |
-| `ebay_condition_policies` | category_id, payload jsonb, fetched_at （Metadata API キャッシュ） |
-| `ebay_aspect_policies` | category_id, payload jsonb, fetched_at |
-| `ebay_credentials` | account, refresh_token_enc, access_token_enc, expires_at, scopes, env (SANDBOX/PROD) |
+| テーブル                  | 主な列                                                                                                                         |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `marketplaces`            | code (EBAY_US 等), currency, is_enabled                                                                                        |
+| `marketplace_listings`    | catalog_product_id, marketplace_id, sku, ebay_offer_id, ebay_listing_id, status, price, quantity, published_at, last_synced_at |
+| `ebay_condition_policies` | category_id, payload jsonb, fetched_at （Metadata API キャッシュ）                                                             |
+| `ebay_aspect_policies`    | category_id, payload jsonb, fetched_at                                                                                         |
+| `ebay_credentials`        | account, refresh_token_enc, access_token_enc, expires_at, scopes, env (SANDBOX/PROD)                                           |
 
 **コストと利益**
 
-| テーブル | 主な列 |
-|---|---|
-| `cost_profiles` | name, marketplace_id, fee_percent, fixed_fee, intl_fee_percent, ad_rate, fx_spread, fx_buffer, return_reserve, packaging_cost, insurance, is_active, effective_from |
-| `shipping_rules` | country, carrier, service, weight_from/to, price_from/to, cost, buyer_charged, signature_option |
-| `customs_rules` | country, mode (BUYER_PAID/SELLER_PAID/MARKETPLACE_COLLECTED/CARRIER_QUOTE_REQUIRED/MANUAL_REVIEW), rate_percent, threshold, notes |
-| `profit_calculations` | catalog_product_id, marketplace_id, scenario (OPTIMISTIC/BASE/PESSIMISTIC), 各費目, profit, margin, **settings_snapshot jsonb**, calculated_at |
-| `market_prices` | catalog_product_id, marketplace_id, source, sold_median, sold_count, active_min, active_median, sample_window_days, collected_at, is_sufficient |
+| テーブル              | 主な列                                                                                                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cost_profiles`       | name, marketplace_id, fee_percent, fixed_fee, intl_fee_percent, ad_rate, fx_spread, fx_buffer, return_reserve, packaging_cost, insurance, is_active, effective_from |
+| `shipping_rules`      | country, carrier, service, weight_from/to, price_from/to, cost, buyer_charged, signature_option                                                                     |
+| `customs_rules`       | country, mode (BUYER_PAID/SELLER_PAID/MARKETPLACE_COLLECTED/CARRIER_QUOTE_REQUIRED/MANUAL_REVIEW), rate_percent, threshold, notes                                   |
+| `profit_calculations` | catalog_product_id, marketplace_id, scenario (OPTIMISTIC/BASE/PESSIMISTIC), 各費目, profit, margin, **settings_snapshot jsonb**, calculated_at                      |
+| `market_prices`       | catalog_product_id, marketplace_id, source, sold_median, sold_count, active_min, active_median, sample_window_days, collected_at, is_sufficient                     |
 
 **運用**
 
-| テーブル | 主な列 |
-|---|---|
-| `price_history` / `stock_history` | supplier_product_id, value, observed_at（追記のみ） |
-| `sync_jobs` | type, supplier_id, status, lock_key (UQ), started_at, finished_at, stats jsonb |
-| `sync_logs` | job_id, level, message, context jsonb |
-| `ai_generations` | target_type, target_id, model, prompt_hash, input jsonb, output jsonb, schema_valid, confidence, warnings jsonb, cost_tokens |
-| `app_settings` | key, value jsonb, updated_by, updated_at（Dry Run フラグ等） |
-| `audit_logs` | actor, action, target, before jsonb, after jsonb, ip, at |
+| テーブル                          | 主な列                                                                                                                       |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `price_history` / `stock_history` | supplier_product_id, value, observed_at（追記のみ）                                                                          |
+| `sync_jobs`                       | type, supplier_id, status, lock_key (UQ), started_at, finished_at, stats jsonb                                               |
+| `sync_logs`                       | job_id, level, message, context jsonb                                                                                        |
+| `ai_generations`                  | target_type, target_id, model, prompt_hash, input jsonb, output jsonb, schema_valid, confidence, warnings jsonb, cost_tokens |
+| `app_settings`                    | key, value jsonb, updated_by, updated_at（Dry Run フラグ等）                                                                 |
+| `audit_logs`                      | actor, action, target, before jsonb, after jsonb, ip, at                                                                     |
 
 ### 7.3 同一商品マッチング
 
@@ -645,18 +646,18 @@ CardBridge/
 
 ご提示の 9 フェーズをほぼ踏襲します（1点だけ順序を変更）。
 
-| Phase | 内容 | 変更点 |
-|---|---|---|
-| 1 | monorepo 基盤 / Supabase / Auth / DB スキーマ / 管理画面シェル / Dry Run ガード | — |
-| 2 | Adapter 基盤 / **サイト実地調査** / magi・カードラッシュ取得 / 共通形式変換 / 同期ログ | 冒頭に §2.1 の調査を追加 |
-| 3 | PSA10 判定 / 商品名解析 / 同一商品統合 / 手動統合画面 | — |
-| 4 | 画像取得 / 処理候補 / マスク・トリミング / 手動確認画面 / ポリシー警告 | — |
+| Phase  | 内容                                                                                     | 変更点                                                                                                       |
+| ------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| 1      | monorepo 基盤 / Supabase / Auth / DB スキーマ / 管理画面シェル / Dry Run ガード          | —                                                                                                            |
+| 2      | Adapter 基盤 / **サイト実地調査** / magi・カードラッシュ取得 / 共通形式変換 / 同期ログ   | 冒頭に §2.1 の調査を追加                                                                                     |
+| 3      | PSA10 判定 / 商品名解析 / 同一商品統合 / 手動統合画面                                    | —                                                                                                            |
+| 4      | 画像取得 / 処理候補 / マスク・トリミング / 手動確認画面 / ポリシー警告                   | —                                                                                                            |
 | **5'** | **eBay Metadata API 先行接続**（カテゴリ・Condition Descriptor・Aspects の実データ取得） | **Phase 7 から前倒し**。理由: 必須項目が確定しないと §5 の利益計算も §6 のタイトル生成も仕様が固まらないため |
-| 5 | コスト・配送・関税設定 / 利益計算 / 逆算価格 / シナリオ分析 | — |
-| 6 | AI 英語生成 / JSON Schema 検証 / 手動編集 / 警告管理 | — |
-| 7 | eBay OAuth / Inventory API / Dry Run / **Sandbox 1商品出品** | Metadata 部分は 5' 済 |
-| 8 | 在庫・価格同期 / 出品停止 / 定期ジョブ / 通知 / エラー回復 | — |
-| 9 | Production 接続 / 5商品 → 20商品 / 運用検証 | — |
+| 5      | コスト・配送・関税設定 / 利益計算 / 逆算価格 / シナリオ分析                              | —                                                                                                            |
+| 6      | AI 英語生成 / JSON Schema 検証 / 手動編集 / 警告管理                                     | —                                                                                                            |
+| 7      | eBay OAuth / Inventory API / Dry Run / **Sandbox 1商品出品**                             | Metadata 部分は 5' 済                                                                                        |
+| 8      | 在庫・価格同期 / 出品停止 / 定期ジョブ / 通知 / エラー回復                               | —                                                                                                            |
+| 9      | Production 接続 / 5商品 → 20商品 / 運用検証                                              | —                                                                                                            |
 
 各フェーズ終了時に `docs/phases/phase-N.md` として
 「実装内容 / 変更ファイル / 動作確認手順 / テスト結果 / 未解決事項 / 次フェーズ」
@@ -666,16 +667,16 @@ CardBridge/
 
 ## 10. 必要な外部アカウント
 
-| # | アカウント | 用途 | 備考 |
-|---|---|---|---|
-| 1 | **eBay Developer Program** | API キー (App ID / Cert ID / Dev ID) | Sandbox + Production の2セット |
-| 2 | **eBay セラーアカウント（日本）** | 実出品 | Business Policies 有効化が必要 |
-| 3 | **eBay Sandbox テストユーザー** | Sandbox 出品検証 | 開発者ポータルで発行 |
-| 4 | **Supabase** | Postgres / Auth / Storage | Storage は画像保存に使用 |
-| 5 | **Anthropic API**（推奨）または OpenAI API | 英語生成・補助解析 | §12 で理由 |
-| 6 | **ホスティング**: Vercel (web) + Railway/Fly.io (worker) | — | worker を分ける理由は §12 |
-| 7 | 為替レート API（exchangerate.host / OpenExchangeRates） | JPY↔USD 等 | 無料枠で可 |
-| 8 | 通知チャネル（Slack Incoming Webhook 等） | 売却時・エラー通知 | 任意 |
+| #   | アカウント                                               | 用途                                 | 備考                           |
+| --- | -------------------------------------------------------- | ------------------------------------ | ------------------------------ |
+| 1   | **eBay Developer Program**                               | API キー (App ID / Cert ID / Dev ID) | Sandbox + Production の2セット |
+| 2   | **eBay セラーアカウント（日本）**                        | 実出品                               | Business Policies 有効化が必要 |
+| 3   | **eBay Sandbox テストユーザー**                          | Sandbox 出品検証                     | 開発者ポータルで発行           |
+| 4   | **Supabase**                                             | Postgres / Auth / Storage            | Storage は画像保存に使用       |
+| 5   | **Anthropic API**（推奨）または OpenAI API               | 英語生成・補助解析                   | §12 で理由                     |
+| 6   | **ホスティング**: Vercel (web) + Railway/Fly.io (worker) | —                                    | worker を分ける理由は §12      |
+| 7   | 為替レート API（exchangerate.host / OpenExchangeRates）  | JPY↔USD 等                           | 無料枠で可                     |
+| 8   | 通知チャネル（Slack Incoming Webhook 等）                | 売却時・エラー通知                   | 任意                           |
 
 **申請に時間がかかるもの**（先に着手してください）:
 eBay Production キーの承認、eBay Business Policies の有効化。
@@ -778,6 +779,7 @@ Zod スキーマとの往復が確実、(b) 日本語カード名の解釈と英
 OpenAI へ差し替え可能にします。
 
 **AI の使い方の原則**（要件どおり）:
+
 - AI は**補助**。決定的パーサ → 店舗固有ルール → JSON-LD → AI の順で試行し、
   先に確定した値を AI で上書きしない。
 - **年・カード番号・セット名を AI に推測させない**。
@@ -807,51 +809,51 @@ Marketplace Insights の申請自体は並行して行う価値があります�
 
 ### 13.1 技術的リスク
 
-| # | リスク | 影響 | 対策 |
-|---|---|---|---|
-| T1 | 対象サイトの HTML 構造変更 | 取得停止・誤データ | セレクタ外部化、`healthCheck` で日次検証、取得件数の急変を検知しアラート |
-| T2 | サイトが JS 描画必須だった | 実装工数増 | Phase 2 冒頭で実測。必要な部分のみ Playwright |
-| T3 | 商品IDが安定して取れない | 重複登録・履歴分断 | URL・内部ID・content hash の多重化。§2.4 の正規化 |
-| T4 | 商品名解析の精度不足 | 誤マッチ・誤出品 | 確信度閾値 + 要確認キュー。**推測しない**を徹底 |
-| T5 | 誤統合（別カードの統合） | 誤発送・SNAD | card_number 単独一致では統合しない。手動解除可能 |
-| T6 | 画像マスクの誤検出 | カード本体を隠す/番号が残る | 多段合議 + 面積・交差の安全検証 + 低信頼は手動 |
-| T7 | eBay API レート制限 | 同期失敗 | `getUserRateLimits` で実測、トークンバケット制御、指数バックオフ |
-| T8 | 為替変動 | 利益消失 | `fx_buffer` を必須計上。悲観シナリオで判定 |
-| T9 | 二重出品・二重更新 | アカウント警告 | Idempotency Key + `sync_jobs` 排他 + SKU 一意制約 |
-| T10 | 在庫の売り違い（国内で先に売れる） | キャンセル・評価毀損 | eBay 数量は常に 1、売却時に即数量 0、同期間隔を短く |
-| T11 | 秘密情報の漏洩 | 重大 | 全キーをサーバー限定、OAuth トークンは AES-256-GCM で暗号化保存、ログにマスク |
-| T12 | SSRF（画像 URL 経由） | 内部ネットワーク到達 | 画像 URL は提携先ドメインの許可リストで検証、プライベート IP を拒否、リダイレクト追跡を制限 |
+| #   | リスク                             | 影響                        | 対策                                                                                        |
+| --- | ---------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------- |
+| T1  | 対象サイトの HTML 構造変更         | 取得停止・誤データ          | セレクタ外部化、`healthCheck` で日次検証、取得件数の急変を検知しアラート                    |
+| T2  | サイトが JS 描画必須だった         | 実装工数増                  | Phase 2 冒頭で実測。必要な部分のみ Playwright                                               |
+| T3  | 商品IDが安定して取れない           | 重複登録・履歴分断          | URL・内部ID・content hash の多重化。§2.4 の正規化                                           |
+| T4  | 商品名解析の精度不足               | 誤マッチ・誤出品            | 確信度閾値 + 要確認キュー。**推測しない**を徹底                                             |
+| T5  | 誤統合（別カードの統合）           | 誤発送・SNAD                | card_number 単独一致では統合しない。手動解除可能                                            |
+| T6  | 画像マスクの誤検出                 | カード本体を隠す/番号が残る | 多段合議 + 面積・交差の安全検証 + 低信頼は手動                                              |
+| T7  | eBay API レート制限                | 同期失敗                    | `getUserRateLimits` で実測、トークンバケット制御、指数バックオフ                            |
+| T8  | 為替変動                           | 利益消失                    | `fx_buffer` を必須計上。悲観シナリオで判定                                                  |
+| T9  | 二重出品・二重更新                 | アカウント警告              | Idempotency Key + `sync_jobs` 排他 + SKU 一意制約                                           |
+| T10 | 在庫の売り違い（国内で先に売れる） | キャンセル・評価毀損        | eBay 数量は常に 1、売却時に即数量 0、同期間隔を短く                                         |
+| T11 | 秘密情報の漏洩                     | 重大                        | 全キーをサーバー限定、OAuth トークンは AES-256-GCM で暗号化保存、ログにマスク               |
+| T12 | SSRF（画像 URL 経由）              | 内部ネットワーク到達        | 画像 URL は提携先ドメインの許可リストで検証、プライベート IP を拒否、リダイレクト追跡を制限 |
 
 ### 13.2 eBay ポリシー上のリスク
 
-| # | リスク | 深刻度 | 対策 |
-|---|---|---|---|
-| P1 | **代表画像運用**（画像と異なる個体を発送） | **高** | 既定 OFF。実物1個体:出品1件。数量は 1 |
-| P2 | **画像の黒塗り** | **中〜高（未確定）** | §4。本番既定にしない。書面確認まで Sandbox 限定 |
-| P3 | 画像加工の自動検知による差し替え・非表示 | 中 | ORIGINAL 既定、加工版は手動承認のみ |
-| P4 | Condition Descriptor の誤登録 | 中 | Metadata API から動的取得。ハードコード禁止 |
-| P5 | 認証番号の未記載 | 低 | 27503 は任意。ただし実物と紐づく場合は記載を推奨 |
-| P6 | タイトルのキーワードスタッフィング/誇張 | 中 | AI に禁止語リスト（authentic, rare, mint 等の根拠なき付加）を適用し、機械検証 |
-| P7 | VeRO / 知的財産（ポケモン画像） | 中 | 提携先の許諾は「提携先の画像」に対するもの。転載元がメーカー画像でないことを確認 |
-| P8 | 販売国の輸入規制・税務 | 中 | 販売国を初期は US に限定。国追加は個別検討 |
-| P9 | 米国 de minimis 撤廃による関税 | **高（新規）** | 関税を必ずコストモデルに計上。DDP/DAP を国×価格帯で設定 |
+| #   | リスク                                     | 深刻度               | 対策                                                                             |
+| --- | ------------------------------------------ | -------------------- | -------------------------------------------------------------------------------- |
+| P1  | **代表画像運用**（画像と異なる個体を発送） | **高**               | 既定 OFF。実物1個体:出品1件。数量は 1                                            |
+| P2  | **画像の黒塗り**                           | **中〜高（未確定）** | §4。本番既定にしない。書面確認まで Sandbox 限定                                  |
+| P3  | 画像加工の自動検知による差し替え・非表示   | 中                   | ORIGINAL 既定、加工版は手動承認のみ                                              |
+| P4  | Condition Descriptor の誤登録              | 中                   | Metadata API から動的取得。ハードコード禁止                                      |
+| P5  | 認証番号の未記載                           | 低                   | 27503 は任意。ただし実物と紐づく場合は記載を推奨                                 |
+| P6  | タイトルのキーワードスタッフィング/誇張    | 中                   | AI に禁止語リスト（authentic, rare, mint 等の根拠なき付加）を適用し、機械検証    |
+| P7  | VeRO / 知的財産（ポケモン画像）            | 中                   | 提携先の許諾は「提携先の画像」に対するもの。転載元がメーカー画像でないことを確認 |
+| P8  | 販売国の輸入規制・税務                     | 中                   | 販売国を初期は US に限定。国追加は個別検討                                       |
+| P9  | 米国 de minimis 撤廃による関税             | **高（新規）**       | 関税を必ずコストモデルに計上。DDP/DAP を国×価格帯で設定                          |
 
 ### 13.3 未確定事項（ご判断・ご確認をお願いしたい項目）
 
 各項目に**推奨案を併記**しています。
 
-| # | 未確定事項 | 推奨案 |
-|---|---|---|
-| U1 | 対象2サイトへのアクセス手段 | エグレス許可リストへ追加。不可なら HTML スナップショットを共有 |
-| U2 | Picture Policy の黒塗り可否 | **eBay Japan へ書面照会**。それまで ORIGINAL 既定 |
-| U3 | 提携先からの非表示処理済み画像の入手可否 | **交渉を推奨**（最もリスクが低い） |
-| U4 | 販売対象国 | **MVP は EBAY_US のみ**。安定後に UK/AU/DE を追加 |
-| U5 | 発送手段 | **MVP は 1〜2 種を設定で固定**（例: FedEx / 日本郵便）。実勢送料を管理画面で入力 |
-| U6 | 高額商品の閾値 | **$200 を初期値**（AG 閾値と揃える。日本セラーは AG 対象外だが、バイヤー期待値の境界として妥当）。管理画面で変更可 |
-| U7 | 最低利益額・最低利益率 | **初期 ¥1,500 / 15%**。管理画面で変更可 |
-| U8 | 実売相場の取得手段 | §12.6 の3層。Marketplace Insights は並行申請 |
-| U9 | 発送拠点 | 国内送料の計算に必須。住所（都道府県）をご教示ください |
-| U10 | eBay セラーアカウントの既存有無・実績 | 出品制限（Selling Limits）の有無で MVP の規模が変わります |
+| #   | 未確定事項                               | 推奨案                                                                                                             |
+| --- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| U1  | 対象2サイトへのアクセス手段              | エグレス許可リストへ追加。不可なら HTML スナップショットを共有                                                     |
+| U2  | Picture Policy の黒塗り可否              | **eBay Japan へ書面照会**。それまで ORIGINAL 既定                                                                  |
+| U3  | 提携先からの非表示処理済み画像の入手可否 | **交渉を推奨**（最もリスクが低い）                                                                                 |
+| U4  | 販売対象国                               | **MVP は EBAY_US のみ**。安定後に UK/AU/DE を追加                                                                  |
+| U5  | 発送手段                                 | **MVP は 1〜2 種を設定で固定**（例: FedEx / 日本郵便）。実勢送料を管理画面で入力                                   |
+| U6  | 高額商品の閾値                           | **$200 を初期値**（AG 閾値と揃える。日本セラーは AG 対象外だが、バイヤー期待値の境界として妥当）。管理画面で変更可 |
+| U7  | 最低利益額・最低利益率                   | **初期 ¥1,500 / 15%**。管理画面で変更可                                                                            |
+| U8  | 実売相場の取得手段                       | §12.6 の3層。Marketplace Insights は並行申請                                                                       |
+| U9  | 発送拠点                                 | 国内送料の計算に必須。住所（都道府県）をご教示ください                                                             |
+| U10 | eBay セラーアカウントの既存有無・実績    | 出品制限（Selling Limits）の有無で MVP の規模が変わります                                                          |
 
 ---
 
@@ -895,6 +897,7 @@ Marketplace Insights の申請自体は並行して行う価値があります�
 承認をいただいたら、以下を作成します。
 
 **基盤 (12)**
+
 ```
 package.json, pnpm-workspace.yaml, turbo.json, tsconfig.base.json
 .eslintrc.cjs, .prettierrc, vitest.workspace.ts, .env.example
@@ -902,6 +905,7 @@ package.json, pnpm-workspace.yaml, turbo.json, tsconfig.base.json
 ```
 
 **DB (7)**
+
 ```
 packages/db/package.json
 packages/db/src/schema/suppliers.ts
@@ -915,6 +919,7 @@ supabase/migrations/0002_rls.sql
 ```
 
 **コア型と安全装置 (8)**
+
 ```
 packages/core/src/types/money.ts          # decimal.js ラッパ Money 型
 packages/core/src/types/attributed.ts     # {value, source, confidence}
@@ -927,6 +932,7 @@ packages/core/src/types/money.test.ts
 ```
 
 **Adapter 基盤 (5)**
+
 ```
 packages/adapters/src/base/supplier-adapter.ts   # インターフェース定義
 packages/adapters/src/base/http-client.ts        # UA/間隔/条件付きGET/リトライ
@@ -936,6 +942,7 @@ packages/adapters/src/base/http-client.test.ts
 ```
 
 **Web (8)**
+
 ```
 apps/web/package.json, next.config.ts, tailwind.config.ts
 apps/web/app/layout.tsx
@@ -946,6 +953,7 @@ apps/web/lib/auth/require-admin.ts
 ```
 
 **調査スクリプト (2)**
+
 ```
 scripts/research/snapshot.ts
 scripts/research/analyze-structure.ts

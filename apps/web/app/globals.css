@@ -1,0 +1,41 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-border-subtle: #e2e8f0;
+
+  /* Status colours. Used consistently so a glance at the product list conveys
+     state without reading labels. */
+  --color-status-ok: #15803d;
+  --color-status-warn: #b45309;
+  --color-status-danger: #b91c1c;
+  --color-status-neutral: #475569;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-surface: #0f172a;
+    --color-surface-muted: #1e293b;
+    --color-border-subtle: #334155;
+  }
+}
+
+body {
+  background: var(--color-surface-muted);
+  color: #0f172a;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    'Hiragino Kaku Gothic ProN',
+    'Noto Sans JP',
+    Meiryo,
+    sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    color: #e2e8f0;
+  }
+}

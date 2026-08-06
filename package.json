@@ -1,0 +1,36 @@
+{
+  "name": "cardbridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PSA10 Pokemon card sourcing to eBay listing management system",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "pnpm -r --filter './packages/**' build",
+    "dev": "pnpm --filter @cardbridge/web dev",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:generate": "pnpm --filter @cardbridge/db generate",
+    "research:snapshot": "tsx scripts/research/snapshot.ts",
+    "research:analyze": "tsx scripts/research/analyze-structure.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "@types/node": "^22.13.0",
+    "cheerio": "^1.0.0",
+    "eslint": "^9.19.0",
+    "eslint-config-prettier": "^10.0.1",
+    "prettier": "^3.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.22.0",
+    "vitest": "^3.0.4"
+  }
+}
