@@ -4,7 +4,7 @@
 共通形式への正規化・利益判定・AI 英語生成を経て、
 **管理者の承認後にのみ** eBay へ出品・同期する半自動管理システム。
 
-> **現在 Phase 1（基盤）完了。** eBay への書き込みは一切行われません。
+> **現在 Phase 1 / 3 / 5（基盤・解析・統合・利益計算）完了。** eBay への書き込みは一切行われません。
 > `DRY_RUN` は既定で有効です。
 
 ---
@@ -66,7 +66,7 @@ pnpm dev          # http://localhost:3000
 ## 検証コマンド
 
 ```bash
-pnpm test                          # 60 tests
+pnpm test                          # 227 tests
 pnpm typecheck                     # 全パッケージ
 pnpm lint
 pnpm format:check

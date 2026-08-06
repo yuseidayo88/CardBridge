@@ -55,12 +55,17 @@ export function normalizeTitle(input: string): string {
  * Never store the output — it is lossy by design.
  */
 export function normalizeForComparison(input: string): string {
-  return normalizeTitle(input)
-    .toLowerCase()
-    .replace(/[[\]()]/g, ' ')
-    .replace(/[・･\-_,.'"]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+  return (
+    normalizeTitle(input)
+      .toLowerCase()
+      .replace(/[[\]()]/g, ' ')
+      .replace(/[・･\-_,.'"]/g, '')
+      // Spaces are removed entirely, not collapsed. Shops are inconsistent
+      // about them — "リザードンex" and "リザードン ex" are the same card — and
+      // leaving one space in makes an identical card score 0.875 instead of 1.
+      .replace(/\s+/g, '')
+      .trim()
+  );
 }
 
 /**

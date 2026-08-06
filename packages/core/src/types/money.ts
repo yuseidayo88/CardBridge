@@ -228,8 +228,31 @@ export class Money {
   }
 
   /**
+   * This amount as an exact percentage of another, returned as a decimal
+   * string.
+   *
+   * Exists so that a margin can be computed without a float step. The obvious
+   * `ratioTo(x) * 100` reintroduces IEEE-754 at the last moment, and the
+   * result is compared against a configured margin floor — so a value landing
+   * a fraction below 15 instead of exactly on it decides whether an item gets
+   * listed.
+   */
+  percentOf(other: Money, decimalPlaces = 4): string {
+    this.assertSameCurrency(other, 'compare');
+    if (other.amount.isZero()) {
+      throw new Error('Cannot compute a percentage of zero');
+    }
+    return this.amount
+      .div(other.amount)
+      .times(100)
+      .toDecimalPlaces(decimalPlaces, Decimal.ROUND_HALF_UP)
+      .toFixed();
+  }
+
+  /**
    * Ratio against another amount, as a plain number. Only for ratios that are
-   * genuinely dimensionless (margin %, fee %) — never for money.
+   * genuinely dimensionless and not used for a threshold decision — prefer
+   * percentOf() for anything that gates behaviour.
    */
   ratioTo(other: Money): number {
     this.assertSameCurrency(other, 'compare');
