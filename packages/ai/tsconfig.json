@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // These packages are consumed as TypeScript source (package.json "main"
+    // points at src/index.ts) and are transpiled by whichever app imports
+    // them. Nothing here emits, so rootDir/outDir would only get in the way of
+    // cross-package source imports.
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "paths": {
+      "@cardbridge/core": ["../core/src/index.ts"],
+      "@cardbridge/db": ["../db/src/index.ts"],
+      "@cardbridge/ebay": ["../ebay/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}

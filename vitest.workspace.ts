@@ -19,6 +19,22 @@ export default defineWorkspace([
   },
   {
     test: {
+      name: 'ai',
+      root: './packages/ai',
+      environment: 'node',
+      include: ['src/**/*.test.ts'],
+    },
+  },
+  {
+    test: {
+      name: 'imaging',
+      root: './packages/imaging',
+      environment: 'node',
+      include: ['src/**/*.test.ts'],
+    },
+  },
+  {
+    test: {
       name: 'ebay',
       root: './packages/ebay',
       environment: 'node',

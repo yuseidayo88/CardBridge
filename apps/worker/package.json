@@ -1,0 +1,21 @@
+{
+  "name": "@cardbridge/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@cardbridge/adapters": "workspace:*",
+    "@cardbridge/ai": "workspace:*",
+    "@cardbridge/core": "workspace:*",
+    "@cardbridge/db": "workspace:*",
+    "@cardbridge/ebay": "workspace:*",
+    "@cardbridge/imaging": "workspace:*",
+    "drizzle-orm": "^0.38.4",
+    "tsx": "^4.19.2"
+  }
+}

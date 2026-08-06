@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
+    "paths": {
+      "@cardbridge/core": ["../../packages/core/src/index.ts"],
+      "@cardbridge/db": ["../../packages/db/src/index.ts"],
+      "@cardbridge/ebay": ["../../packages/ebay/src/index.ts"],
+      "@cardbridge/adapters": ["../../packages/adapters/src/index.ts"],
+      "@cardbridge/ai": ["../../packages/ai/src/index.ts"],
+      "@cardbridge/imaging": ["../../packages/imaging/src/index.ts"]
+    }
+  },
+  "include": ["src/**/*"]
+}

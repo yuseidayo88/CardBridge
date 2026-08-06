@@ -66,7 +66,7 @@ pnpm dev          # http://localhost:3000
 ## 検証コマンド
 
 ```bash
-pnpm test                          # 227 tests
+pnpm test                          # 351 tests
 pnpm typecheck                     # 全パッケージ
 pnpm lint
 pnpm format:check

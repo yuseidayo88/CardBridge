@@ -175,7 +175,7 @@ AI の寄与は**英語カード名1項目のみ**です。
 **検証コマンド**
 
 ```bash
-pnpm test          # 227 passed
+pnpm test          # 351 passed
 pnpm typecheck     # 0 errors
 pnpm lint          # clean
 pnpm format:check  # clean
