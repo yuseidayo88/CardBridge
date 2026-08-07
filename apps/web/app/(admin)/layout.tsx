@@ -10,6 +10,7 @@ const NAV = [
   { href: '/matching', label: '商品統合' },
   { href: '/images', label: '画像確認' },
   { href: '/settings/costs', label: 'コスト・配送' },
+  { href: '/settings/ebay', label: 'eBay 接続' },
   { href: '/settings/system', label: 'システム設定' },
 ];
 
