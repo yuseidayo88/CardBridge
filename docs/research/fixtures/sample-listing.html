@@ -1,0 +1,92 @@
+<!doctype html>
+<!--
+  Synthetic fixture for scripts/research/analyze-structure.ts.
+
+  This is NOT a copy of any partner's page and must never be treated as one.
+  It exists so the analyser can be exercised and tested without network access,
+  and so that its output format can be reviewed before the real snapshots
+  arrive. The markup deliberately mixes patterns common to Japanese storefronts
+  (repeated product cards, mixed stock vocabulary, query-string pagination,
+  partial JSON-LD) so the heuristics get a realistic workout.
+-->
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>PSA10 | サンプルカードショップ</title>
+    <link rel="canonical" href="https://example.test/product-group/99" />
+    <meta property="og:title" content="PSA10 一覧" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "Product",
+            "sku": "100234",
+            "name": "【PSA10】リザードンex SAR 201/165 黒煙の支配者",
+            "offers": { "@type": "Offer", "price": "128000", "priceCurrency": "JPY" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav class="global-nav">
+      <a href="/">ホーム</a><a href="/group">カテゴリ</a>
+    </nav>
+
+    <ul class="product-list">
+      <li class="product-item" data-product-id="100234">
+        <a class="product-link" href="/product/100234">
+          <img class="product-thumb" src="/img/100234.jpg" alt="リザードンex" />
+          <span class="product-name">【PSA10】リザードンex SAR 201/165 黒煙の支配者</span>
+        </a>
+        <span class="product-price">¥128,000</span>
+        <span class="product-stock">残り 2 点</span>
+      </li>
+      <li class="product-item" data-product-id="100235">
+        <a class="product-link" href="/product/100235">
+          <img class="product-thumb" src="/img/100235.jpg" alt="ミュウex" />
+          <span class="product-name">【PSA10】ミュウex SAR 205/165 黒煙の支配者</span>
+        </a>
+        <span class="product-price">¥45,800</span>
+        <span class="product-stock">在庫あり</span>
+      </li>
+      <li class="product-item" data-product-id="100236">
+        <a class="product-link" href="/product/100236">
+          <img class="product-thumb" src="/img/100236.jpg" alt="ピカチュウ" />
+          <span class="product-name">【PSA10】ピカチュウ AR 112/108 サンプルセット</span>
+        </a>
+        <span class="product-price">¥8,500</span>
+        <span class="product-stock">SOLD OUT</span>
+      </li>
+      <li class="product-item" data-product-id="100237">
+        <a class="product-link" href="/product/100237">
+          <img class="product-thumb" src="/img/100237.jpg" alt="ナンジャモ" />
+          <span class="product-name">【PSA10】ナンジャモ SAR 091/071 スノーハザード</span>
+        </a>
+        <span class="product-price">¥210,000</span>
+        <span class="product-stock">残り 1 点</span>
+      </li>
+      <li class="product-item" data-product-id="100238">
+        <a class="product-link" href="/product/100238">
+          <img class="product-thumb" src="/img/100238.jpg" alt="カイ" />
+          <span class="product-name">【PSA10】カイ SR 199/172 VSTARユニバース</span>
+        </a>
+        <span class="product-price">¥67,000</span>
+        <span class="product-stock">カートに入れる</span>
+      </li>
+    </ul>
+
+    <div class="pager">
+      <a href="/product-group/99?page=1">1</a>
+      <a href="/product-group/99?page=2">2</a>
+      <a href="/product-group/99?page=3">3</a>
+      <a href="/product-group/99?page=2">次へ</a>
+    </div>
+
+    <footer class="site-footer">
+      <a href="/law">特定商取引法</a><a href="/contact">お問い合わせ</a>
+    </footer>
+  </body>
+</html>

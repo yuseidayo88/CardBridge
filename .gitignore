@@ -11,9 +11,15 @@ coverage/
 .env.*.local
 !.env.example
 
-# Research snapshots may contain large HTML; keep the reports, ignore raw dumps
+# Live snapshots of partner pages are large and are someone else's content:
+# keep the generated reports, ignore the raw dumps. Sharing one deliberately is
+# still possible with `git add -f`.
 docs/research/**/*.html
 docs/research/**/raw/
+# The synthetic fixtures are the exception. They are not copies of any partner
+# page, and generic-cart-adapter.test.ts reads them at runtime -- ignoring them
+# makes the test suite fail on a fresh clone.
+!docs/research/fixtures/*.html
 
 # OS / editor
 .DS_Store
