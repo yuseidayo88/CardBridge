@@ -18,16 +18,42 @@ import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { HttpClient } from '../../packages/adapters/src/base/http-client';
 
-const SUPPLIERS: Record<string, { hosts: string[]; urls: string[] }> = {
+/**
+ * The listing URLs each shop actually uses, confirmed by the operator against
+ * the live sites.
+ *
+ * Page ranges are hard-coded rather than crawled to exhaustion on purpose. This
+ * is exploratory traffic on a partner's shop, and a loop that stops when it sees
+ * an empty page will always make one wasted request — worse, a shop that serves
+ * the first page for an out-of-range number would make it loop forever.
+ */
+const SUPPLIERS: Record<string, { hosts: string[]; urls: string[]; note?: string }> = {
   magi: {
     hosts: ['magicardshop.jp'],
-    urls: ['https://www.magicardshop.jp/product-group/14'],
+    urls: pages('https://www.magicardshop.jp/product-group/14?page=', 1, 5),
   },
   cardrush: {
     hosts: ['cardrush-pokemon.jp'],
-    urls: ['https://www.cardrush-pokemon.jp/product-group/277'],
+    // num=100 packs 100 products into one response, so 14 pages cover the
+    // category in 14 requests instead of several hundred. available=1 filters
+    // to purchasable stock, which is the only stock we can act on anyway.
+    urls: [
+      'https://www.cardrush-pokemon.jp/product-group/277/0/photo?num=100&img=160&available=1&sort=',
+      ...pages(
+        'https://www.cardrush-pokemon.jp/product-group/277/0/photo?num=100&img=160&available=1&sort=&page=',
+        2,
+        14,
+      ),
+    ],
+    note: 'available=1 means these pages list only purchasable items; a product that disappears between runs is sold out rather than merely unseen.',
   },
 };
+
+function pages(base: string, from: number, to: number): string[] {
+  const urls: string[] = [];
+  for (let page = from; page <= to; page += 1) urls.push(`${base}${page}`);
+  return urls;
+}
 
 const ROOT = new URL('../..', import.meta.url).pathname;
 const OUT_DIR = join(ROOT, 'docs/research');
