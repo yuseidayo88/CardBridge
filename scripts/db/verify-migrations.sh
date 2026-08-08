@@ -115,5 +115,33 @@ psql -h $SOCK -p $PORT -U postgres -d $DB -q -c \
 assert_rejected "duplicate active sync job" \
   "INSERT INTO sync_jobs (type, lock_key) VALUES ('SUPPLIER_FULL_SYNC','magi:full')"
 
+assert_rejected "card name marked verified with nobody's name on it" \
+  "INSERT INTO card_names (name_ja, name_key, name_en, source, is_verified)
+   VALUES ('リザードンex','リザードンex','Charizard ex','test',true)"
+
+assert_rejected "card name with a blank English name" \
+  "INSERT INTO card_names (name_ja, name_key, name_en, source)
+   VALUES ('リザードンex','リザードンex','   ','test')"
+
+psql -h $SOCK -p $PORT -U postgres -d $DB -q -c \
+  "INSERT INTO card_names (name_ja, name_key, name_en, set_code, card_number, source)
+   VALUES ('リザードンex','リザードンex','Charizard ex','sv3a','006/165','test')" >/dev/null
+assert_rejected "the same card name in the same set and number twice" \
+  "INSERT INTO card_names (name_ja, name_key, name_en, set_code, card_number, source)
+   VALUES ('リザードンex','リザードンex','Charizard ex','sv3a','006/165','test')"
+
+# A name-only row is a different row from a set-scoped one, and must still be
+# allowed to coexist with it -- otherwise importing a general fallback name
+# would collide with every specific printing already recorded.
+psql -h $SOCK -p $PORT -U postgres -d $DB -q -c \
+  "INSERT INTO card_names (name_ja, name_key, name_en, source)
+   VALUES ('リザードンex','リザードンex','Charizard ex','test')" >/dev/null \
+  && echo "    ok: a name-only row coexists with a set-scoped one" \
+  || { echo "    FAILED: a name-only row was rejected alongside a set-scoped one"; exit 1; }
+
+assert_rejected "two name-only rows for the same card" \
+  "INSERT INTO card_names (name_ja, name_key, name_en, source)
+   VALUES ('リザードンex','リザードンex','Charizard ex','test')"
+
 echo ""
 echo "All migration checks passed."

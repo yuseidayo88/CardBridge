@@ -146,3 +146,49 @@ export const productMatchesRelations = relations(productMatches, ({ one }) => ({
     references: [supplierProducts.id],
   }),
 }));
+
+/**
+ * Japanese card name to official English name.
+ *
+ * The alternative to this table is asking a model, and a model that does not
+ * know a card produces a plausible English name anyway. A plausible wrong name
+ * is indistinguishable from a right one to the reviewer approving the listing,
+ * so the lookup is preferred wherever it has an answer.
+ *
+ * `nameKey` is the normalised form (width folded, spaces removed) and is what
+ * queries actually match on; `nameJa` is kept verbatim for display.
+ */
+export const cardNames = pgTable(
+  'card_names',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+
+    nameJa: text('name_ja').notNull(),
+    nameKey: text('name_key').notNull(),
+    nameEn: text('name_en').notNull(),
+
+    /** Null for a name-only row that applies across sets. */
+    setCode: text('set_code'),
+    cardNumber: text('card_number'),
+
+    /** Where the row came from: an import, an admin, a partner list. */
+    source: text('source').notNull(),
+    /**
+     * False until a human confirms it. Unverified rows still resolve, but the
+     * lookup caps their confidence below the publish floor.
+     */
+    isVerified: boolean('is_verified').notNull().default(false),
+    verifiedBy: text('verified_by'),
+    verifiedAt: timestamp('verified_at', { withTimezone: true }),
+
+    note: text('note'),
+
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    // The lookup path. Name first because every query has one; set and number
+    // narrow it when they are available.
+    index('card_names_key_idx').on(t.nameKey, t.setCode, t.cardNumber),
+  ],
+);
