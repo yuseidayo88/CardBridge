@@ -4,8 +4,8 @@
 共通形式への正規化・利益判定・AI 英語生成を経て、
 **管理者の承認後にのみ** eBay へ出品・同期する半自動管理システム。
 
-> **現在 Phase 1 / 3 / 5（基盤・解析・統合・利益計算）完了。** eBay への書き込みは一切行われません。
-> `DRY_RUN` は既定で有効です。
+> eBay への書き込みは一切行われません。`DRY_RUN` は既定で有効です。
+> 現在の実装状況と残っているブロッカーは `docs/phases/status.md`。
 
 ---
 
@@ -66,7 +66,7 @@ pnpm dev          # http://localhost:3000
 ## 検証コマンド
 
 ```bash
-pnpm test                          # 351 tests
+pnpm test                          # 464 tests
 pnpm typecheck                     # 全パッケージ
 pnpm lint
 pnpm format:check
@@ -76,6 +76,12 @@ scripts/db/verify-migrations.sh    # 使い捨て Postgres へ全マイグレー
 
 `verify-migrations.sh` はネットワークも Supabase も不要です。
 
+```bash
+scripts/research/fetch-snapshots.sh    # 提携2サイトのHTMLを1回ずつ取得
+```
+
+このスクリプトは提携先へ到達できる端末で実行してください。
+
 ---
 
 ## 構成
@@ -83,9 +89,11 @@ scripts/db/verify-migrations.sh    # 使い捨て Postgres へ全マイグレー
 ```
 apps/web              Next.js 15 App Router（管理画面）
 packages/core         ドメイン層。Money / Attributed / 型 / 設定
-packages/db           Drizzle スキーマ（28 テーブル）
-packages/ebay         eBay 連携。現時点では DryRunGuard のみ
-packages/adapters     Supplier Adapter 基盤（HTTP・レート制限・URL 安全性・設定スキーマ）
+packages/db           Drizzle スキーマ（29 テーブル）
+packages/ebay         DryRunGuard / OAuth / Inventory / Metadata / Browse
+packages/adapters     Supplier Adapter 基盤 + GenericCartAdapter
+packages/ai           Provider 抽象 + Anthropic / OpenAI 実装・幻覚ガード
+packages/imaging      スラブ幾何・マスク安全検証・sharp パイプライン
 scripts/research      対象サイトの構造調査ツール
 scripts/db            マイグレーション検証
 supabase/migrations   SQL（Drizzle 生成 + 手書きの RLS / 制約 / シード）
@@ -98,6 +106,16 @@ docs/phases           フェーズ完了報告
 **金額に `number` を使わない。** `Money`（decimal.js ラッパ）のみ。
 異なる通貨の演算は実行時に例外。ESLint が利益計算コードでの生の算術演算を
 機械的に禁止します。
+
+**英語名は推測せず照合する。** 日本語カード名から公式英語名への変換は
+文字列処理では不可能です（リザードンex → Charizard ex）。`card_names` 表で
+引き、一致の精度に応じて信頼度を変えます。名前だけの一致は自動出品しません。
+詳細は `packages/core/src/catalog/card-name-lookup.ts`。
+
+**相場は「希望価格」と「販売価格」を混同しない。** Browse API は出品中の
+商品しか見えません。販売済みデータは公式に入手不可のため（Marketplace Insights
+は新規受付停止、findCompletedItems は 2025年2月廃止）、`isSufficient` は
+リテラル型の `false` です。出品中の価格だけで自動出品はしません。
 
 **推測値と確定値を分離する。** すべての解析属性は
 `{ value, source, confidence }` を持ちます。`source: 'unknown'` なら
