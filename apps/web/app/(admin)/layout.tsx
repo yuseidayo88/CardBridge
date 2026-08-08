@@ -11,6 +11,7 @@ const NAV = [
   { href: '/images', label: '画像確認' },
   { href: '/settings/costs', label: 'コスト・配送' },
   { href: '/settings/ebay', label: 'eBay 接続' },
+  { href: '/settings/card-names', label: 'カード名対応表' },
   { href: '/settings/system', label: 'システム設定' },
 ];
 
