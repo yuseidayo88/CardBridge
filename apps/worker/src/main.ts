@@ -4,6 +4,7 @@ import { JobQueue, type ClaimedJob } from './queue';
 import { runSupplierSync } from './jobs/supplier-sync';
 import { runEbayMetadataRefresh } from './jobs/ebay-metadata';
 import { runMarketPriceRefresh } from './jobs/market-price';
+import { runAiGeneration } from './jobs/ai-generation';
 
 /**
  * Worker entry point.
@@ -52,10 +53,15 @@ async function handle(job: ClaimedJob, queue: JobQueue): Promise<void> {
       return;
     }
 
+    case 'AI_GENERATION': {
+      const stats = await runAiGeneration(job, queue);
+      await queue.complete(job.id, stats);
+      return;
+    }
+
     // Still unimplemented. Failing explicitly is better than a silent no-op
     // that looks like success in the dashboard.
     case 'IMAGE_PROCESSING':
-    case 'AI_GENERATION':
     case 'EBAY_LISTING_SYNC':
       throw new Error(
         `${job.type} is not wired up yet — it needs credentials or network access that this deployment does not have`,

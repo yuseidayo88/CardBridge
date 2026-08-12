@@ -172,22 +172,38 @@ pnpm test                        # 464 passed
 pnpm typecheck                   # 0 errors
 pnpm lint && pnpm format:check   # clean
 pnpm --filter @cardbridge/web build
-scripts/db/verify-migrations.sh  # 29テーブル + 12制約
+scripts/db/verify-migrations.sh  # 29テーブル + 13制約
 scripts/db/verify-queue.sh       # 同時実行5項目
+scripts/db/verify-sql.sh         # 手書きSQL 11本を実スキーマに対して検証
 ```
+
+`verify-sql.sh` は今回追加しました。TypeScript は sql`` テンプレートの中を
+見られないため、存在しない列名でも型検査は通り、**運用者が見ている画面で**
+初めて失敗します。初回実行で実バグを2件検出しました
+（`market_prices` に `active_max` 列が無い、`marketplaces` に
+`ebay_category_id` 列が無い）。
 
 ---
 
 ## 4. 未実装 — 本当に前提が必要なもの
 
-| 項目                                   | 前提                      |
-| -------------------------------------- | ------------------------- |
-| 仕入れ先セレクター確定                 | **A**（HTML）             |
-| 画像の取得・保存                       | **B**（Supabase Storage） |
-| メタデータ定期取得ジョブ               | **B** + eBayキー          |
-| 相場取得ジョブ                         | **B** + eBayキー          |
-| Sandbox 出品                           | **B** + **C**             |
-| 画像確認・コスト設定・商品統合の各画面 | **B**                     |
+| 項目                   | 前提                      |
+| ---------------------- | ------------------------- |
+| 仕入れ先セレクター確定 | **A**（HTML）             |
+| 画像の取得・保存       | **B**（Supabase Storage） |
+| 画像確認画面           | **B** + 画像              |
+| Sandbox 出品           | **B** + **C**             |
+
+実装済みだが実行に前提が要るもの（コードは完成・エラーで明示的に停止します）:
+
+| ジョブ / 画面           | 実行の前提       |
+| ----------------------- | ---------------- |
+| `EBAY_METADATA_REFRESH` | **B** + eBayキー |
+| `MARKET_PRICE_REFRESH`  | **B** + eBayキー |
+| `AI_GENERATION`         | **B** + AIキー   |
+| コスト設定画面          | **B**            |
+| 商品統合画面            | **B**            |
+| カード名対応表          | **B**            |
 
 ワーカーは未実装のジョブ種別を**明示的にエラー**にします。
 ダッシュボード上で成功に見える無言の no-op より、失敗として見えるほうが安全です。
