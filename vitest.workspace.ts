@@ -35,6 +35,14 @@ export default defineWorkspace([
   },
   {
     test: {
+      name: 'worker',
+      root: './apps/worker',
+      environment: 'node',
+      include: ['src/**/*.test.ts'],
+    },
+  },
+  {
+    test: {
       name: 'ebay',
       root: './packages/ebay',
       environment: 'node',

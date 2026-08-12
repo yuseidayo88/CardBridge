@@ -2,6 +2,8 @@ import { getDb } from '@cardbridge/db';
 import { loadGuardConfig } from '@cardbridge/ebay';
 import { JobQueue, type ClaimedJob } from './queue';
 import { runSupplierSync } from './jobs/supplier-sync';
+import { runEbayMetadataRefresh } from './jobs/ebay-metadata';
+import { runMarketPriceRefresh } from './jobs/market-price';
 
 /**
  * Worker entry point.
@@ -35,14 +37,26 @@ async function handle(job: ClaimedJob, queue: JobQueue): Promise<void> {
       return;
     }
 
-    // The remaining job types need credentials or reachable partner sites, so
-    // they are registered but not implemented. Failing explicitly is better
-    // than a silent no-op that looks like success in the dashboard.
+    // Both of these run on an application token, so neither needs a seller to
+    // have connected. They throw with the name of the missing variable rather
+    // than silently doing nothing when the keys are absent.
+    case 'EBAY_METADATA_REFRESH': {
+      const stats = await runEbayMetadataRefresh(job, queue);
+      await queue.complete(job.id, stats);
+      return;
+    }
+
+    case 'MARKET_PRICE_REFRESH': {
+      const stats = await runMarketPriceRefresh(job, queue);
+      await queue.complete(job.id, stats);
+      return;
+    }
+
+    // Still unimplemented. Failing explicitly is better than a silent no-op
+    // that looks like success in the dashboard.
     case 'IMAGE_PROCESSING':
     case 'AI_GENERATION':
-    case 'MARKET_PRICE_REFRESH':
     case 'EBAY_LISTING_SYNC':
-    case 'EBAY_METADATA_REFRESH':
       throw new Error(
         `${job.type} is not wired up yet — it needs credentials or network access that this deployment does not have`,
       );

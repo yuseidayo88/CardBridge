@@ -143,5 +143,12 @@ assert_rejected "two name-only rows for the same card" \
   "INSERT INTO card_names (name_ja, name_key, name_en, source)
    VALUES ('リザードンex','リザードンex','Charizard ex','test')"
 
+assert_rejected "a market observation whose max is below its min" \
+  "INSERT INTO market_prices (catalog_product_id, marketplace_id, source, currency,
+                              active_min, active_max, active_count)
+   SELECT c.id, m.id, 'BROWSE_API', 'USD', 500, 100, 3
+   FROM catalog_products c, marketplaces m
+   WHERE m.code='EBAY_US' AND c.match_key='fixture-key'"
+
 echo ""
 echo "All migration checks passed."

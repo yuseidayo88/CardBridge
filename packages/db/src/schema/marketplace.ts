@@ -184,6 +184,9 @@ export const marketPrices = pgTable(
 
     activeMin: numeric('active_min', { precision: 20, scale: 6 }),
     activeMedian: numeric('active_median', { precision: 20, scale: 6 }),
+    /** The spread matters: a wide gap between min and max means the "median"
+     *  is describing several different cards that happen to share a name. */
+    activeMax: numeric('active_max', { precision: 20, scale: 6 }),
     activeCount: integer('active_count'),
 
     sampleWindowDays: integer('sample_window_days'),
